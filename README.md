@@ -4,13 +4,18 @@ Editor und Erklärseite für das AI-DTL, eine Selbstauskunft zur KI-Nutzung an e
 Ein Label besteht aus einem **Klartextsatz** und einem **Code**, z. B.:
 
 ```
-Enthält mit KI erzeugte Inhalte. KI-Ausgaben von einem Menschen inhaltlich geprüft. Eine Person übernimmt die Verantwortung. Werkzeug: GitHub Copilot (10/2026).
+Enthält mit KI erzeugte Inhalte. KI-Ausgaben von einem Menschen inhaltlich geprüft. Eine Person übernimmt die Verantwortung.
 AI-DTL 0.5: G/H:C;R:H;Acc:I (GitHub Copilot, 10/2026)
 ```
 
-- Live (Version 0.4.1): <https://joshuadohmen-sketch.github.io/AIDL/>
-- Release-Kandidat 0.5 (Vorschau, Studie): <https://joshuadohmen-sketch.github.io/AIDL/rc/>
-- Lizenz: CC BY 4.0 · Kontakt: Joshua Dohmen, KI-Beauftragter Universität Koblenz
+- Live (Version 0.4.1): <https://ai-dtl.github.io/ai-dtl/>
+- Release-Kandidat 0.5 (Vorschau, Studie): <https://ai-dtl.github.io/ai-dtl/rc/>
+- Lizenz: Code MIT, Inhalte CC BY 4.0 (siehe [Lizenz](#lizenz)) · Kontakt: Joshua Dohmen, KI-Beauftragter Universität Koblenz
+- Feedback: <https://github.com/ai-dtl/ai-dtl/issues>
+
+Frühere Adresse: Bis Oktober 2026 lag das Projekt unter `joshuadohmen-sketch.github.io/AIDL`. Diese Seite
+bleibt unverändert online, damit dorthin verteilte Links weiter funktionieren. Neue Labels verweisen auf die
+Adresse oben.
 
 Die Seite ist bewusst **statisch**: kein Build-Schritt, keine Abhängigkeiten, keine Telemetrie,
 keine Speicherung, keine externen Requests außer Google Fonts (nur 0.4.1).
@@ -81,7 +86,7 @@ Server, auf GitHub Pages auf `SITE_BASE`.
 
 ## Studienmodus
 
-`…/AIDL/rc/?modus=studie` (optional `&fall=V07`, nur Format `V` + zwei Ziffern):
+`…/ai-dtl/rc/?modus=studie` (optional `&fall=V07`, nur Format `V` + zwei Ziffern):
 
 - Banner „Studienmodus – Ihre Eingaben werden nicht gespeichert“ (mit Fallnummer)
 - „Beispiel laden“ ausgeblendet, Host-Vorschlag aus Werkzeugen abgeschaltet
@@ -114,3 +119,9 @@ Mit NVDA (Firefox/Chrome) oder VoiceOver (Safari) auf `rc/`:
 7. **Zoom 200 %** und Fensterbreite 320 px: kein waagerechtes Scrollen der Seite.
 8. **Kontrast**: alle Textfarben ≥ 4,5:1 (Grau `#6e6e6e` auf `#f5f5f5` = 4,68:1).
 9. **Sprache**: Nach Umschalten auf EN trägt `<html>` `lang="en"`; die Ansage wechselt die Aussprache.
+
+## Lizenz
+
+- **Code** (HTML, CSS, JavaScript, Tests): MIT, siehe [`LICENSE`](LICENSE).
+- **Inhalte** (Spezifikation und Texte in `js/spec.js`, Piktogramme, Changelog, Dokumentation):
+  [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), siehe [`LICENSE-CONTENT.md`](LICENSE-CONTENT.md).

@@ -4,7 +4,7 @@
 // revision plan, Annex A; ENABLE_M switches the provisional level M (decision E3).
 
 // Canonical base URL of this copy of the site; shared links always point here.
-const SITE_BASE = 'https://joshuadohmen-sketch.github.io/AIDL/';
+const SITE_BASE = 'https://ai-dtl.github.io/ai-dtl/';
 
 // Provisional (E3): level M "existing work modified". false → all "[ohne M]" texts apply.
 const ENABLE_M = true;

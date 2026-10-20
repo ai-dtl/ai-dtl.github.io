@@ -5,7 +5,7 @@
 
 // Canonical base URL of this copy of the site; shared links always point here.
 // Release candidate: links point to rc/label/?v=0.5… until 0.5 is released (Phase 7).
-const SITE_BASE = 'https://joshuadohmen-sketch.github.io/AIDL/rc/';
+const SITE_BASE = 'https://ai-dtl.github.io/ai-dtl/rc/';
 
 // Provisional (E3): level M "existing work modified". false → all "[ohne M]" texts apply.
 const ENABLE_M = true;
