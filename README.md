@@ -8,17 +8,15 @@ Enthält mit KI erzeugte Inhalte. KI-Ausgaben von einem Menschen inhaltlich gepr
 AI-DTL 0.5: G/H:C;R:H;Acc:I (GitHub Copilot, 10/2026)
 ```
 
-- Live (Version 0.4.1): <https://ai-dtl.github.io/ai-dtl/>
-- Release-Kandidat 0.5 (Vorschau, Studie): <https://ai-dtl.github.io/ai-dtl/rc/>
+- Live (Version 0.4.1): <https://ai-dtl.github.io/>
+- Release-Kandidat 0.5 (Vorschau, Studie): <https://ai-dtl.github.io/rc/>
 - Lizenz: Code MIT, Inhalte CC BY 4.0 (siehe [Lizenz](#lizenz)) · Kontakt: Joshua Dohmen, KI-Beauftragter Universität Koblenz
-- Feedback: <https://github.com/ai-dtl/ai-dtl/issues>
-
-Frühere Adresse: Bis Oktober 2026 lag das Projekt unter `joshuadohmen-sketch.github.io/AIDL`. Diese Seite
-bleibt unverändert online, damit dorthin verteilte Links weiter funktionieren. Neue Labels verweisen auf die
-Adresse oben.
+- Feedback: <https://github.com/ai-dtl/ai-dtl.github.io/issues>
 
 Die Seite ist bewusst **statisch**: kein Build-Schritt, keine Abhängigkeiten, keine Telemetrie,
-keine Speicherung, keine externen Requests außer Google Fonts (nur 0.4.1).
+keine Speicherung, keine externen Requests. Es werden nur Dateien aus diesem Repo geladen; als Schrift
+dient Open Sans, falls auf dem Gerät installiert, sonst Arial. Ausgeliefert wird über GitHub Pages
+aus dem Branch `main`.
 
 ## Struktur
 

@@ -53,6 +53,8 @@ function applyT() {
     const s = text(el.dataset.i18nPh);
     if (s) el.placeholder = s;
   });
+  // site-wide texts (privacy notice), kept outside the frozen 0.4 specification
+  document.querySelectorAll('[data-site]').forEach(el => { el.textContent = SITE_TEXTS[lang][el.dataset.site]; });
   // "When does the generator warn?" is generated from the same rules as the hints
   const whenBody = document.querySelector('.warn-details-body');
   if (whenBody) {

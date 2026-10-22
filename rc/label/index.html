@@ -68,12 +68,13 @@
 
 <div class="page">
   <footer>
-    <span><span id="footer-draft">AI-DTL Working Draft 0.5 (Vorschau)</span> · <a href="https://ai-dtl.github.io/ai-dtl/changelog/">Changelog</a></span>
+    <span><span id="footer-draft">AI-DTL Working Draft 0.5 (Vorschau)</span> · <a href="https://ai-dtl.github.io/changelog/">Changelog</a></span>
     <span>
-      <a href="https://github.com/ai-dtl/ai-dtl/blob/main/LICENSE">MIT</a> / <a href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0</a> ·
-      <a href="https://github.com/ai-dtl/ai-dtl/issues">Feedback</a> ·
+      <a href="https://github.com/ai-dtl/ai-dtl.github.io/blob/main/LICENSE">MIT</a> / <a href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0</a> ·
+      <a href="https://github.com/ai-dtl/ai-dtl.github.io/issues">Feedback</a> ·
       <a href="mailto:jdohmen@uni-koblenz.de">Joshua Dohmen</a>
     </span>
+    <p class="privacy"><span id="privacy-text"></span> <a id="privacy-link" href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"></a></p>
   </footer>
 </div>
 
@@ -172,6 +173,8 @@ function render() {
   document.documentElement.lang = lang;
   document.getElementById('header-version').textContent = t05.ui.header_version;
   document.getElementById('footer-draft').textContent = t05.ui.footer_draft;
+  document.getElementById('privacy-text').textContent = t05.ui.privacy;
+  document.getElementById('privacy-link').textContent = t05.ui.privacy_link;
   document.getElementById('btn-de').setAttribute('aria-pressed', String(lang === 'de'));
   document.getElementById('btn-en').setAttribute('aria-pressed', String(lang === 'en'));
 

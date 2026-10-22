@@ -5,7 +5,7 @@
 
 // Canonical base URL of this copy of the site; shared links always point here.
 // Release candidate: links point to rc/label/?v=0.5… until 0.5 is released (Phase 7).
-const SITE_BASE = 'https://ai-dtl.github.io/ai-dtl/rc/';
+const SITE_BASE = 'https://ai-dtl.github.io/rc/';
 
 // Provisional (E3): level M "existing work modified". false → all "[ohne M]" texts apply.
 const ENABLE_M = true;
@@ -268,6 +268,8 @@ function buildSpec05(enableM) {
       study_case: 'Fall',
       study_copy: 'Ergebnis für den Fragebogen kopieren',
       footer_test: 'Version 0.5 wird gerade mit Nutzer:innen getestet. Feedback ist willkommen.',
+      privacy: 'Datenschutz: Der Editor speichert keine Eingaben und sendet nichts an einen Server. Alles läuft in Ihrem Browser. Die Seite wird über GitHub Pages ausgeliefert. GitHub verarbeitet dabei Ihre IP-Adresse aus Sicherheitsgründen.',
+      privacy_link: 'Datenschutzerklärung von GitHub',
       legacy_loaded: 'Dieses Label wurde mit Version 0.4 erstellt. Bitte prüfen Sie die Angaben nach den Regeln von 0.5.',
       part_label: 'Nur ein einzelnes Bild, Video oder Tonstück ist mit KI erzeugt oder verändert? Empfehlung: ein eigenes Label direkt an diesem Element und ein Label für den Rest des Werks.',
     },
@@ -495,6 +497,8 @@ function buildSpec05(enableM) {
       study_case: 'Case',
       study_copy: 'Copy result for the questionnaire',
       footer_test: 'Version 0.5 is currently being tested with users. Feedback is welcome.',
+      privacy: 'Privacy: The editor does not store any input and sends nothing to a server. Everything runs in your browser. The page is delivered via GitHub Pages. GitHub processes your IP address for security reasons.',
+      privacy_link: 'GitHub Privacy Statement',
       legacy_loaded: 'This label was created with version 0.4. Please check it against the 0.5 rules.',
       part_label: 'Only a single image, video or audio clip was generated or modified with AI? Recommended: a separate label directly on that element and one label for the rest of the work.',
     },
@@ -731,6 +735,7 @@ function buildSpec05(enableM) {
       { id: 'accn',  trigger: 'Acc:N',       when: s => s.acc === 'Acc:N' },
     ],
     euLabelsUrl: 'https://digital-strategy.ec.europa.eu/en/policies/eu-icons-labelling-ai-generated-content',
+    privacyUrl: 'https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement',
     i18n: { de, en },
   };
 }

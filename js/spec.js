@@ -4,10 +4,23 @@
 // revision plan, Annex A; ENABLE_M switches the provisional level M (decision E3).
 
 // Canonical base URL of this copy of the site; shared links always point here.
-const SITE_BASE = 'https://ai-dtl.github.io/ai-dtl/';
+const SITE_BASE = 'https://ai-dtl.github.io/';
 
 // Provisional (E3): level M "existing work modified". false → all "[ohne M]" texts apply.
 const ENABLE_M = true;
+
+// Site-wide texts of the 0.4.1 pages that are not part of the frozen 0.4 specification
+const SITE_TEXTS = {
+  privacyUrl: 'https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement',
+  de: {
+    privacy: 'Datenschutz: Der Editor speichert keine Eingaben und sendet nichts an einen Server. Alles läuft in Ihrem Browser. Die Seite wird über GitHub Pages ausgeliefert. GitHub verarbeitet dabei Ihre IP-Adresse aus Sicherheitsgründen.',
+    privacy_link: 'Datenschutzerklärung von GitHub',
+  },
+  en: {
+    privacy: 'Privacy: The editor does not store any input and sends nothing to a server. Everything runs in your browser. The page is delivered via GitHub Pages. GitHub processes your IP address for security reasons.',
+    privacy_link: 'GitHub Privacy Statement',
+  },
+};
 
 function deepFreeze(o) {
   Object.values(o).forEach(v => { if (v && typeof v === 'object' && !Object.isFrozen(v)) deepFreeze(v); });
@@ -625,5 +638,5 @@ const SPEC = {
 };
 
 if (typeof module !== 'undefined') {
-  module.exports = { SITE_BASE, ENABLE_M, SPEC, buildSpec05: m => deepFreeze(buildSpec05(m)) };
+  module.exports = { SITE_BASE, ENABLE_M, SITE_TEXTS, SPEC, buildSpec05: m => deepFreeze(buildSpec05(m)) };
 }

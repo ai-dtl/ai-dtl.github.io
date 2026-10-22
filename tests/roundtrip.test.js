@@ -51,6 +51,6 @@ test('0.4 round trip keeps the old link format', () => {
 test('example URL from section 3 of the plan', () => {
   const s = { stamm: ['G'], host: ['H:C'], review: 'R:H', acc: 'Acc:O',
     tools: [{ name: 'Microsoft 365 Copilot', month: '10', year: '2026' }], p: 'Rohfassung', rp: 'Referat Hochschulkommunikation' };
-  assert.equal(core.buildURL(s, '0.5', 'https://ai-dtl.github.io/ai-dtl/'),
-    'https://ai-dtl.github.io/ai-dtl/label/?v=0.5&s=G&h=H%3AC&r=R%3AH&a=Acc%3AO&t=Microsoft+365+Copilot&d=10%2F2026&p=Rohfassung&rp=Referat+Hochschulkommunikation');
+  assert.equal(core.buildURL(s, '0.5', 'https://ai-dtl.github.io/'),
+    'https://ai-dtl.github.io/label/?v=0.5&s=G&h=H%3AC&r=R%3AH&a=Acc%3AO&t=Microsoft+365+Copilot&d=10%2F2026&p=Rohfassung&rp=Referat+Hochschulkommunikation');
 });

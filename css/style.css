@@ -578,6 +578,8 @@ footer {
 }
 footer a { color: var(--g700); text-decoration: none; }
 footer a:hover { text-decoration: underline; }
+footer .privacy { flex-basis: 100%; max-width: 75ch; line-height: 1.5; }
+footer .privacy a { text-decoration: underline; }
 
 /* ── Responsive ─────────────────────────────────────────── */
 @media (max-width: 560px) {

@@ -11,7 +11,7 @@ documentation – is licensed under **Creative Commons Attribution 4.0 Internati
 Lizenztext / Licence text: <https://creativecommons.org/licenses/by/4.0/legalcode>
 
 Namensnennung / Attribution: „AI-DTL – AI Disclosure & Transparency Label, Joshua Dohmen,
-Universität Koblenz, https://ai-dtl.github.io/ai-dtl/“
+Universität Koblenz, https://ai-dtl.github.io/“
 
 Der Programmcode steht unter der MIT-Lizenz, siehe `LICENSE`.
 The program code is licensed under the MIT licence, see `LICENSE`.

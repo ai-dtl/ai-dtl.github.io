@@ -357,6 +357,7 @@ footer {
 }
 footer a { color: var(--g700); }
 .footer-test { flex-basis: 100%; color: var(--g700); }
+.privacy { flex-basis: 100%; max-width: 75ch; margin-top: .3rem; }
 
 /* ── Medium screens: cards may wrap; group lines become full-width rows ─── */
 @media (max-width: 899px) {

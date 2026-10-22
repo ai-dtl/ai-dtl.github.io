@@ -4,8 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI-DTL Label</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --red: #c61a27;
@@ -100,6 +98,8 @@
     }
     footer a { color: var(--g700); text-decoration: none; }
     footer a:hover { text-decoration: underline; }
+    footer .privacy { flex-basis: 100%; max-width: 75ch; line-height: 1.5; }
+    footer .privacy a { text-decoration: underline; }
 
     @media (max-width: 560px) {
       .page { padding: 1.5rem 1rem 3rem; }
@@ -125,11 +125,12 @@
   <footer>
     <span>AI-DTL Working Draft 0.4.1 · Oktober 2026 · <a href="../changelog/">Changelog</a></span>
     <span>
-      <a href="https://github.com/ai-dtl/ai-dtl/blob/main/LICENSE" target="_blank">MIT</a> / <a href="https://creativecommons.org/licenses/by/4.0" target="_blank">CC BY 4.0</a> ·
+      <a href="https://github.com/ai-dtl/ai-dtl.github.io/blob/main/LICENSE" target="_blank">MIT</a> / <a href="https://creativecommons.org/licenses/by/4.0" target="_blank">CC BY 4.0</a> ·
       DOI folgt (Zenodo) ·
-      <a href="https://github.com/ai-dtl/ai-dtl/issues" target="_blank">Feedback</a> ·
+      <a href="https://github.com/ai-dtl/ai-dtl.github.io/issues" target="_blank">Feedback</a> ·
       <a href="mailto:jdohmen@uni-koblenz.de">Joshua Dohmen</a>
     </span>
+    <p class="privacy"><span id="privacy-text"></span> <a id="privacy-link" href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank"></a></p>
   </footer>
 </main>
 
@@ -175,6 +176,8 @@ function renderPage() {
   const p = parsed && parsed.v === '0.4' ? parsed : null;
   const t = SPEC['0.4'].i18n[lang];
   const root = document.getElementById('content');
+  document.getElementById('privacy-text').textContent = SITE_TEXTS[lang].privacy;
+  document.getElementById('privacy-link').textContent = SITE_TEXTS[lang].privacy_link;
   const cta = withSub => el('div', { className: 'cta' },
     el('a', { href: '../' }, t.page.create_own),
     withSub ? el('p', {}, t.page.create_sub) : null);
