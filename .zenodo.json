@@ -1,0 +1,22 @@
+{
+  "title": "AI-DTL – AI Disclosure & Transparency Label",
+  "version": "0.5.0-preview",
+  "upload_type": "software",
+  "description": "<p>AI-DTL (AI Disclosure &amp; Transparency Label) ist ein Label, mit dem Erstellende offenlegen, wie KI an einem Werk beteiligt war. Ein Label besteht aus einem Satz für Lesende und einem Code, z. B. <code>AI-DTL 0.5: G/H:C;R:H;Acc:I (GitHub Copilot, 10/2026)</code>. Der Code hält fest, was die KI gemacht hat, wo sie lief, wer geprüft hat und wer einsteht.</p><p>Dieses Archiv enthält Spezifikation, Editor und Erklärseite der Version 0.5 als Vorschau. Vor der Freigabe wird die Version in einer Validierungsstudie geprüft. Live: <a href=\"https://ai-dtl.github.io/\">https://ai-dtl.github.io/</a></p><p>AI-DTL (AI Disclosure &amp; Transparency Label) lets creators disclose how AI was involved in a work. A label consists of a sentence for readers and a code that records what the AI did, where it ran, who reviewed it and who is accountable. This archive contains the specification, editor and label page of version 0.5 as a preview; a validation study precedes the release.</p><p>Code: MIT. Content (specification, texts, pictograms): CC BY 4.0.</p>",
+  "creators": [
+    {
+      "name": "Dohmen, Joshua",
+      "affiliation": "Universität Koblenz"
+    }
+  ],
+  "license": "cc-by-4.0",
+  "keywords": [
+    "AI disclosure",
+    "AI transparency",
+    "AI labelling",
+    "generative AI",
+    "research integrity",
+    "AI Act Art. 50",
+    "KI-Kennzeichnung"
+  ]
+}
