@@ -1,5 +1,7 @@
 # AI-DTL – AI Disclosure & Transparency Label
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24101111.svg)](https://doi.org/10.5281/zenodo.24101111)
+
 Editor und Erklärseite für das AI-DTL, eine Selbstauskunft zur KI-Nutzung an einem Werk.
 Ein Label besteht aus einem **Klartextsatz** und einem **Code**, z. B.:
 
@@ -9,7 +11,7 @@ AI-DTL 0.5: G/H:C;R:H;Acc:I (GitHub Copilot, 10/2026)
 ```
 
 - Live: <https://ai-dtl.github.io/> (Version 0.5 als Vorschau; die Freigabe folgt nach der Validierungsstudie)
-- Lizenz: Code MIT, Inhalte CC BY 4.0 (siehe [Lizenz](#lizenz)) · Kontakt: Joshua Dohmen, KI-Beauftragter Universität Koblenz
+- Lizenz: Code MIT, Inhalte CC BY 4.0 (siehe [Lizenz](#lizenz)) · DOI: [10.5281/zenodo.24101111](https://doi.org/10.5281/zenodo.24101111) · Kontakt: Joshua Dohmen, KI-Beauftragter Universität Koblenz
 - Feedback: <https://github.com/ai-dtl/ai-dtl.github.io/issues>
 
 Die Seite ist bewusst **statisch**: kein Build-Schritt, keine Abhängigkeiten, keine Telemetrie,
@@ -112,6 +114,16 @@ Mit NVDA (Firefox/Chrome) oder VoiceOver (Safari) auf der Hauptseite:
 7. **Zoom 200 %** und Fensterbreite 320 px: kein waagerechtes Scrollen der Seite.
 8. **Kontrast**: alle Textfarben ≥ 4,5:1 (Grau `#6e6e6e` auf `#f5f5f5` = 4,68:1).
 9. **Sprache**: Nach Umschalten auf EN trägt `<html>` `lang="en"`; die Ansage wechselt die Aussprache.
+
+## Zitieren
+
+Dohmen, J. (2026). *AI-DTL – AI Disclosure & Transparency Label* [Computer software]. Zenodo.
+<https://doi.org/10.5281/zenodo.24101111>
+
+Die DOI oben (Konzept-DOI) zeigt immer auf die neueste archivierte Version. Einzelne Versionen haben
+eigene DOIs, z. B. 0.5.0-preview: [10.5281/zenodo.24101112](https://doi.org/10.5281/zenodo.24101112).
+Neue Versionen entstehen über ein GitHub-Release; Zenodo übernimmt sie automatisch und liest die
+Metadaten aus `.zenodo.json`. Zitierangaben für GitHub stehen in `CITATION.cff`.
 
 ## Lizenz
 
