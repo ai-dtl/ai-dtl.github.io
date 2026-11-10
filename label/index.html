@@ -4,107 +4,51 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI-DTL Label</title>
+  <link rel="stylesheet" href="../css/style.css">
   <style>
-    :root {
-      --red: #c61a27;
-      --black: #000000;
-      --white: #ffffff;
-      --g100: #f5f5f5;
-      --g200: #e8e8e8;
-      --g400: #6e6e6e;
-      --g700: #333333;
-      --font: 'Open Sans', Arial, sans-serif;
+    .label-hero { margin-bottom: 1.25rem; background: var(--white); border: 1px solid var(--g200); border-radius: 8px; padding: 1.75rem 1.5rem; }
+    .label-hero .sentence { font-size: 1.3rem; }
+    .label-hero #badge-container { padding: 1.25rem 0 .75rem; }
+    .code-box {
+      font-family: var(--mono); font-size: .89rem; font-weight: 700; word-break: break-word;
+      background: var(--g100); border-radius: 4px; padding: .5rem .8rem; display: inline-block;
     }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: var(--font); background: var(--g100); color: var(--black); font-size: 18px; line-height: 1.6; }
-
-    .site-header {
-      background: var(--black); padding: 0 2rem; height: 64px;
-      display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100;
-    }
-    .site-header::after {
-      content: ''; display: block; position: absolute;
-      top: 64px; left: 0; right: 0; height: 3px; background: var(--red);
-    }
-    .logo-area { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-    .uk-mark {
-      font-family: var(--font); font-weight: 800; font-size: 1.2rem;
-      color: var(--white); letter-spacing: 1.5px; border-left: 3px solid var(--red); padding-left: 10px;
-    }
-    .header-sub { font-size: .68rem; font-weight: 400; color: rgba(255,255,255,.45); letter-spacing: .4px; }
-    .header-sub em { font-style: normal; color: rgba(255,255,255,.28); margin-left: 6px; }
-    @media (max-width: 560px) { .header-sub { display: none; } }
-    .lang-switch { display: flex; gap: 4px; }
-    .lang-switch button {
-      font-family: var(--font); font-size: .72rem; font-weight: 600; letter-spacing: .5px;
-      background: none; border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.5);
-      padding: 4px 10px; cursor: pointer; border-radius: 2px; transition: all .15s;
-    }
-    .lang-switch button.active { background: var(--red); border-color: var(--red); color: var(--white); }
-
-    .page { max-width: 700px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
-
-    .badge-hero { text-align: center; padding: 2.5rem 0 2rem; }
-    .badge-hero svg { max-width: 100%; }
-    .label-string {
-      font-family: 'Courier New', monospace; font-size: .95rem; font-weight: 700;
-      background: var(--white); border: 1px solid var(--g200); border-radius: 4px;
-      padding: .6rem 1rem; margin-top: 1.2rem; display: inline-block; word-break: break-all;
-    }
-
+    .code-caption { font-size: .78rem; font-weight: 700; letter-spacing: .4px; text-transform: uppercase; color: var(--g400); margin-top: .9rem; }
+    .section-title { font-size: 1.05rem; font-weight: 800; margin: 2rem 0 .6rem; }
     .dim-card {
-      background: var(--white); border: 1px solid var(--g200); border-radius: 6px;
-      padding: 1.2rem 1.5rem; margin-bottom: .75rem;
-      display: flex; align-items: center; gap: 1.2rem;
+      background: var(--white); border: 1px solid var(--g200); border-radius: 8px;
+      padding: 1rem 1.25rem; margin-bottom: .6rem; display: flex; gap: 1rem; align-items: flex-start;
     }
     .dim-icon {
-      width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
+      width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0; background: var(--black);
       display: flex; align-items: center; justify-content: center;
-      background: var(--black); color: var(--white);
     }
     .dim-icon svg { width: 28px; height: 28px; }
-    .page-sub { font-size: .85rem; color: var(--g400); margin-bottom: .5rem; }
-    .legacy-note {
-      background: var(--white); border: 1px solid var(--g200); border-radius: 6px;
-      padding: .8rem 1.2rem; margin-bottom: .75rem; font-size: .85rem; color: var(--g700);
-    }
-    .dim-body { flex: 1; }
-    .dim-code { font-family: 'Courier New', monospace; font-size: .75rem; font-weight: 700; color: var(--g400); letter-spacing: .5px; }
-    .dim-title { font-size: .95rem; font-weight: 700; margin: 2px 0; }
-    .dim-desc { font-size: .82rem; color: var(--g700); line-height: 1.45; }
-
-    .tool-info {
-      background: var(--white); border: 1px solid var(--g200); border-radius: 6px;
-      padding: 1.2rem 1.5rem; margin-bottom: .75rem; font-size: .9rem; color: var(--g700);
-    }
-    .tool-info strong { color: var(--black); }
-
-    .cta { text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--g200); }
-    .cta a {
-      display: inline-block; background: var(--red); color: var(--white);
-      text-decoration: none; font-weight: 700; font-size: .85rem;
-      padding: .6rem 1.5rem; border-radius: 4px; letter-spacing: .3px; transition: opacity .15s;
-    }
-    .cta a:hover { opacity: .85; }
-    .cta p { margin-top: .6rem; font-size: .75rem; color: var(--g400); }
-
-    .error { text-align: center; padding: 4rem 1rem; color: var(--g400); }
-    .error h2 { font-size: 1.2rem; color: var(--black); margin-bottom: .5rem; }
-
-    footer {
-      margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--g200);
-      font-size: .72rem; color: var(--g400);
-      display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem;
-    }
-    footer a { color: var(--g700); text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
-    footer .privacy { flex-basis: 100%; max-width: 75ch; line-height: 1.5; }
-    footer .privacy a { text-decoration: underline; }
-
-    @media (max-width: 560px) {
-      .page { padding: 1.5rem 1rem 3rem; }
-      .dim-card { flex-direction: column; text-align: center; gap: .6rem; }
-    }
+    .dim-code { font-family: var(--mono); font-size: .83rem; font-weight: 700; color: var(--g700); }
+    .dim-title { font-weight: 700; }
+    .dim-desc { font-size: .89rem; color: var(--g700); max-width: 65ch; }
+    .info-card { background: var(--white); border: 1px solid var(--g200); border-radius: 8px; padding: 1rem 1.25rem; }
+    .info-card p { max-width: 70ch; }
+    .info-card ul { padding-left: 1.2rem; }
+    .info-card p + p { margin-top: .5rem; }
+    .overview-title { font-size: 1.4rem; font-weight: 800; }
+    .cases-title { font-size: .95rem; font-weight: 700; margin: 1rem 0 .5rem; }
+    .group-title { font-size: .83rem; font-weight: 600; color: var(--g400); margin: .8rem 0 .4rem; border-bottom: 1px solid var(--g300); padding-bottom: 2px; }
+    .principles { margin-bottom: .6rem; }
+    .am-original { font-size: .89rem; margin-bottom: .6rem; }
+    .table-wrap { overflow-x: auto; }
+    .am-table { border-collapse: collapse; width: 100%; font-size: .86rem; }
+    .am-table th, .am-table td { text-align: left; vertical-align: top; padding: .4rem .6rem; border-bottom: 1px solid var(--g200); }
+    .am-table th { font-weight: 700; color: var(--g700); }
+    .principles li { font-weight: 600; }
+    .cases li { font-size: .89rem; }
+    .cases li + li { margin-top: .3rem; }
+    .cta { margin-top: 2rem; }
+    .cta a { display: inline-block; background: var(--black); color: var(--white); text-decoration: none; font-weight: 700; padding: .6rem 1.2rem; border-radius: 4px; }
+    .cta a:hover { background: var(--g700); }
+    .error { background: var(--white); border: 1px solid var(--g200); border-radius: 8px; padding: 2rem 1.5rem; }
+    .error h1 { font-size: 1.3rem; margin-bottom: .4rem; }
+    @media (max-width: 620px) { .dim-card { flex-direction: column; } }
   </style>
 </head>
 <body>
@@ -112,113 +56,198 @@
 <header class="site-header">
   <a class="logo-area" href="../">
     <span class="uk-mark">AI-DTL</span>
-    <span class="header-sub">AI Disclosure &amp; Transparency Label <em>v 0.4.1</em></span>
+    <span class="header-sub">AI Disclosure &amp; Transparency Label · <em id="header-version">v 0.5 (Vorschau)</em></span>
   </a>
-  <div class="lang-switch">
-    <button id="btn-de" class="active" onclick="setLang('de')">DE</button>
-    <button id="btn-en" onclick="setLang('en')">EN</button>
+  <div class="lang-switch" role="group" aria-label="Sprache / Language">
+    <button type="button" id="btn-de" lang="de" aria-pressed="true">DE</button>
+    <button type="button" id="btn-en" lang="en" aria-pressed="false">EN</button>
   </div>
 </header>
 
-<main class="page">
-  <div id="content"></div>
+<main class="page" id="content"></main>
+
+<div class="page">
   <footer>
-    <span>AI-DTL Working Draft 0.4.1 · Oktober 2026 · <a href="../changelog/">Changelog</a></span>
+    <span><span id="footer-draft">AI-DTL Working Draft 0.5 (Vorschau)</span> · <a href="https://ai-dtl.github.io/changelog/">Changelog</a></span>
     <span>
-      <a href="https://github.com/ai-dtl/ai-dtl.github.io/blob/main/LICENSE" target="_blank">MIT</a> / <a href="https://creativecommons.org/licenses/by/4.0" target="_blank">CC BY 4.0</a> ·
-      DOI folgt (Zenodo) ·
-      <a href="https://github.com/ai-dtl/ai-dtl.github.io/issues" target="_blank">Feedback</a> ·
+      <a href="https://github.com/ai-dtl/ai-dtl.github.io/blob/main/LICENSE">MIT</a> / <a href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0</a> ·
+      <a href="https://github.com/ai-dtl/ai-dtl.github.io/issues">Feedback</a> ·
       <a href="mailto:jdohmen@uni-koblenz.de">Joshua Dohmen</a>
     </span>
-    <p class="privacy"><span id="privacy-text"></span> <a id="privacy-link" href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank"></a></p>
+    <p class="privacy"><span id="privacy-text"></span> <a id="privacy-link" href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"></a></p>
   </footer>
-</main>
+</div>
 
-<script src="../js/icons.js"></script>
 <script src="../js/spec.js"></script>
 <script src="../js/label-core.js"></script>
+<script src="../js/icons.js"></script>
 <script>
-// Explanation page 0.4.1. Texts from js/spec.js, parsing and checks from js/label-core.js.
-// Everything taken from the URL is set as text; codes come only from the positive list.
+// Explanation page (Phase 5). Version from "v"; without "v" a link is 0.4.
+// Everything from the URL is set as text; codes come only from the positive list in spec.js.
+(function () {
+'use strict';
 let lang = 'de';
 
-function setLang(l) {
-  lang = l;
-  document.getElementById('btn-de').classList.toggle('active', l === 'de');
-  document.getElementById('btn-en').classList.toggle('active', l === 'en');
-  document.documentElement.lang = l;
-  renderPage();
-}
-
-// Small DOM helper: el('div', { className: 'x' }, child, 'text', …)
 function el(tag, props, ...children) {
   const node = document.createElement(tag);
   Object.assign(node, props || {});
   children.forEach(c => { if (c != null) node.append(c); });
   return node;
 }
+const fillT = (tpl, vars) => tpl.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? vars[k] : m));
 
-function renderDimCard(t, code) {
+function dimCard(code, title, desc) {
   const icon = el('div', { className: 'dim-icon' });
-  // ICONS is a fixed in-page table and code is from the positive list
-  icon.innerHTML = `<svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">${ICONS[code].replace(/currentColor/g, '#ffffff')}</svg>`;
-  return el('div', { className: 'dim-card' },
-    icon,
-    el('div', { className: 'dim-body' },
-      el('div', { className: 'dim-code' }, code),
-      el('div', { className: 'dim-title' }, t.dims[code].title),
-      el('div', { className: 'dim-desc' }, t.dims[code].desc)));
+  icon.setAttribute('aria-hidden', 'true');
+  // ICONS is a fixed table and code is from the positive list
+  icon.innerHTML = `<svg viewBox="0 0 24 24" width="28" height="28">${ICONS[code].replace(/currentColor/g, '#ffffff')}</svg>`;
+  return el('div', { className: 'dim-card' }, icon,
+    el('div', {}, el('div', { className: 'dim-code' }, code), el('div', { className: 'dim-title' }, title), el('div', { className: 'dim-desc' }, desc)));
 }
 
-function renderPage() {
-  // This page shows 0.4 labels; 0.5 labels live under rc/label/ until release.
-  const parsed = LabelCore.fromParams(new URLSearchParams(window.location.search));
-  const p = parsed && parsed.v === '0.4' ? parsed : null;
-  const t = SPEC['0.4'].i18n[lang];
-  const root = document.getElementById('content');
-  document.getElementById('privacy-text').textContent = SITE_TEXTS[lang].privacy;
-  document.getElementById('privacy-link').textContent = SITE_TEXTS[lang].privacy_link;
-  const cta = withSub => el('div', { className: 'cta' },
-    el('a', { href: '../' }, t.page.create_own),
-    withSub ? el('p', {}, t.page.create_sub) : null);
+// Sentence with ORCID / ROR links inside the "Accountable" part
+function sentenceNodes(t, sentence, rp) {
+  if (!rp) return [sentence];
+  const at = sentence.indexOf(fillT(t.sentence.resp, { rp }));
+  if (at < 0) return [sentence];
+  const rpAt = at + t.sentence.resp.indexOf('{rp}');
+  const parts = LabelCore.idSegments(rp).map(seg => (seg.type === 'text'
+    ? seg.text : el('a', { href: seg.url, target: '_blank', rel: 'noopener' }, seg.text)));
+  return [sentence.slice(0, rpAt), ...parts, sentence.slice(rpAt + rp.length)];
+}
 
-  if (!p) {
-    root.replaceChildren(
-      el('div', { className: 'error' }, el('h2', {}, t.page.invalid), el('p', {}, t.page.invalid_sub)),
-      cta(false));
-    document.title = 'AI-DTL – ' + t.page.invalid;
-    return;
-  }
-
-  const s = p.state;
-  // Old links may lack dates or carry N/Acc:N, so the code is assembled for display here.
-  const toolPart = s.tools.length ? ` (${s.tools.map(x => x.name + (x.date ? `, ${x.date}` : '')).join('; ')})` : '';
-  const label = s.stamm === 'N'
-    ? `AI-DTL 0.4: N/${s.acc}`
-    : `AI-DTL 0.4: ${s.stamm}/${s.host};${s.review};${s.acc}${toolPart}`;
-  document.title = 'AI-DTL – ' + label;
-
-  const badge = el('div');
-  badge.innerHTML = buildBadgeSVG(s, '0.4');
-
-  const dims = s.stamm === 'N' ? [s.stamm, s.acc] : [s.stamm, s.host, s.review, s.acc];
+// Without parameters: overview of all levels, borderline cases and the hosting rule
+function renderOverview(t, root, cta) {
+  document.title = 'AI-DTL · ' + t.page.overview_title;
+  const spec = SPEC['0.5'];
   const nodes = [
-    el('div', { className: 'badge-hero' },
-      el('p', { className: 'page-sub' }, t.page.page_sub),
-      badge,
-      el('div', { className: 'label-string' }, label)),
+    el('h1', { className: 'overview-title' }, t.page.overview_title),
+    el('p', { className: 'page-sub' }, t.page.overview_sub),
   ];
-  if (p.legacyNAccN) nodes.push(el('div', { className: 'legacy-note' }, t.page.legacy_n_accn));
-  dims.forEach(code => nodes.push(renderDimCard(t, code)));
-  if (s.tools.length) {
-    const list = s.tools.map(x => x.name + (x.date ? ` (${x.date})` : '')).join('; ');
-    nodes.push(el('div', { className: 'tool-info' }, el('strong', {}, t.page.tool_used + ':'), ' ' + list));
-  }
-  nodes.push(cta(true));
+  ['stamm', 'host', 'review', 'acc'].forEach(dim => {
+    nodes.push(el('h2', { className: 'section-title' }, t.steps[dim].title));
+    if (dim === 'stamm') {
+      // the three guiding sentences, then the cards in their groups
+      nodes.push(el('div', { className: 'info-card principles' }, el('ul', {}, ...t.page.principles.map(p => el('li', {}, p)))));
+      spec.order.stamm.forEach(c => {
+        const group = Object.keys(spec.groups.stamm).find(g => spec.groups.stamm[g][0] === c);
+        if (group) nodes.push(el('h3', { className: 'group-title' }, group === 'none' ? t.ui.group_none : t.ui.group_ai));
+        nodes.push(dimCard(c, t.opt[c].lbl, t.opt[c].dsc));
+      });
+      nodes.push(el('h3', { className: 'cases-title' }, t.page.cases_title));
+      nodes.push(el('div', { className: 'info-card' }, el('ul', { className: 'cases' },
+        ...t.page.cases.map(([situation, code, reason]) =>
+          el('li', {}, el('strong', {}, `${code} ${t.opt[code].lbl}`), ` · ${situation}: ${reason}`)))));
+      // small example for the line between A (how) and M (what)
+      const ex = t.page.am_example;
+      nodes.push(el('h3', { className: 'cases-title' }, ex.title));
+      nodes.push(el('div', { className: 'info-card' },
+        el('p', { className: 'am-original' }, el('strong', {}, ex.original_label),
+          lang === 'en' ? ` “${ex.original}”` : ` „${ex.original}“`),
+        el('div', { className: 'table-wrap' }, el('table', { className: 'am-table' },
+          el('thead', {}, el('tr', {}, ...ex.head.map(h => el('th', { scope: 'col' }, h)))),
+          el('tbody', {}, ...ex.rows.map(row => el('tr', {}, ...row.map(cell => el('td', {}, cell)))))))));
+      return;
+    }
+    spec.order[dim].forEach(c => nodes.push(dimCard(c, t.opt[c].lbl, t.opt[c].dsc)));
+    if (dim === 'host') {
+      nodes.push(el('div', { className: 'info-card' },
+        el('p', {}, t.host_helper.intro), el('p', {}, t.host_rule), el('p', {}, t.host_hint), el('p', {}, t.host_relay)));
+    }
+  });
+  // moved here from the editor: generated from the same rules as the hints
+  nodes.push(el('h2', { className: 'section-title' }, t.ui.when_title));
+  nodes.push(el('div', { className: 'info-card' }, el('ul', {},
+    ...spec.warnings.map(r => el('li', {}, el('strong', {}, r.trigger), `: ${t.warn[r.id]}`)))));
+  nodes.push(el('h2', { className: 'section-title' }, t.page.not_says_title));
+  nodes.push(el('div', { className: 'info-card' }, el('p', {}, t.page.not_says)));
+  nodes.push(el('h2', { className: 'section-title' }, t.page.eu_title));
+  nodes.push(el('div', { className: 'info-card' }, el('p', {}, t.page.eu)));
+  nodes.push(cta);
   root.replaceChildren(...nodes);
 }
 
-renderPage();
+function render() {
+  const t05 = SPEC['0.5'].i18n[lang];
+  const root = document.getElementById('content');
+  document.documentElement.lang = lang;
+  document.getElementById('header-version').textContent = t05.ui.header_version;
+  document.getElementById('footer-draft').textContent = t05.ui.footer_draft;
+  document.getElementById('privacy-text').textContent = t05.ui.privacy;
+  document.getElementById('privacy-link').textContent = t05.ui.privacy_link;
+  document.getElementById('btn-de').setAttribute('aria-pressed', String(lang === 'de'));
+  document.getElementById('btn-en').setAttribute('aria-pressed', String(lang === 'en'));
+
+  const params = new URLSearchParams(window.location.search);
+  const cta = el('div', { className: 'cta' }, el('a', { href: '../' }, t05.page.create_own));
+
+  if (!params.has('s')) {
+    renderOverview(t05, root, cta);
+    return;
+  }
+  const r = LabelCore.fromParams(params);
+
+  if (!r) {
+    // never echo the input
+    root.replaceChildren(el('div', { className: 'error' }, el('h1', {}, t05.page.invalid), el('p', {}, t05.page.invalid_sub)), cta);
+    document.title = 'AI-DTL · ' + t05.page.invalid;
+    return;
+  }
+
+  const s = r.state;
+  const isN = s.stamm === 'N';
+  const dims = isN ? [s.stamm, s.acc] : [s.stamm, s.host, s.review, s.acc];
+  const nodes = [];
+
+  if (r.v === '0.4') {
+    // Old label: frozen 0.4 definitions, code assembled for display (dates may be missing)
+    const t04 = SPEC['0.4'].i18n[lang];
+    const toolPart = s.tools.length ? ` (${s.tools.map(x => x.name + (x.date ? `, ${x.date}` : '')).join('; ')})` : '';
+    const code = isN ? `AI-DTL 0.4: N/${s.acc}` : `AI-DTL 0.4: ${s.stamm}/${s.host};${s.review};${s.acc}${toolPart}`;
+    document.title = 'AI-DTL · ' + code;
+    const badge = el('div', { id: 'badge-container' });
+    badge.innerHTML = buildBadgeSVG(s, { version: '0.4', title: code });
+    nodes.push(el('section', { className: 'label-hero' },
+      el('p', { className: 'notice' }, t05.page.legacy04),
+      el('p', { className: 'page-sub' }, t04.page.page_sub),
+      badge,
+      el('p', { className: 'code-box' }, code)));
+    if (r.legacyNAccN) nodes.push(el('p', { className: 'notice' }, t04.page.legacy_n_accn));
+    dims.forEach(c => nodes.push(dimCard(c, t04.dims[c].title, t04.dims[c].desc)));
+    if (s.tools.length) {
+      nodes.push(el('h2', { className: 'section-title' }, t05.page.tools));
+      nodes.push(el('div', { className: 'info-card' }, el('ul', {}, ...s.tools.map(x => el('li', {}, x.name + (x.date ? ` (${x.date})` : ''))))));
+    }
+  } else {
+    const code = LabelCore.buildCode(s, r.v);
+    const sentence = LabelCore.buildSentence(s, lang, 'text', r.v);
+    document.title = 'AI-DTL · ' + code;
+    const badge = el('div', { id: 'badge-container' });
+    badge.innerHTML = buildBadgeSVG(s, { version: r.v, words: t05.badge, title: code, desc: sentence, url: window.location.href });
+    nodes.push(el('section', { className: 'label-hero' },
+      el('p', { className: 'sentence' }, ...sentenceNodes(t05, sentence, s.rp)),
+      badge,
+      el('p', { className: 'code-caption' }, t05.page.code),
+      el('p', { className: 'code-box' }, code)));
+    dims.forEach(c => nodes.push(dimCard(c, t05.opt[c].lbl, t05.opt[c].dsc)));
+    if (s.tools.length) {
+      nodes.push(el('h2', { className: 'section-title' }, t05.page.tools));
+      nodes.push(el('div', { className: 'info-card' }, el('ul', {}, ...s.tools.map(x => el('li', {}, `${x.name} (${x.date})`)))));
+    }
+  }
+
+  nodes.push(el('h2', { className: 'section-title' }, t05.page.not_says_title));
+  nodes.push(el('div', { className: 'info-card' }, el('p', {}, t05.page.not_says)));
+  nodes.push(el('h2', { className: 'section-title' }, t05.page.eu_title));
+  nodes.push(el('div', { className: 'info-card' }, el('p', {}, t05.page.eu)));
+  nodes.push(cta);
+  root.replaceChildren(...nodes);
+}
+
+document.getElementById('btn-de').addEventListener('click', () => { lang = 'de'; render(); });
+document.getElementById('btn-en').addEventListener('click', () => { lang = 'en'; render(); });
+render();
+})();
 </script>
 </body>
 </html>

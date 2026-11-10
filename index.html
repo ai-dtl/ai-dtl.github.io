@@ -3,230 +3,190 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI-DTL Label Generator</title>
+  <title>AI-DTL Generator · AI Disclosure &amp; Transparency Label (Vorschau 0.5)</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<!-- ── Header ───────────────────────────────────────────── -->
+<a class="skip-link" href="#editor" data-t="ui.skip">Zum Editor springen</a>
+
 <header class="site-header">
-  <div class="logo-area">
+  <a class="logo-area" href="./">
     <span class="uk-mark">AI-DTL</span>
-    <span class="header-sub">AI Disclosure &amp; Transparency Label <em>v 0.4.1</em></span>
-  </div>
-  <div class="lang-switch">
-    <button id="btn-de" class="active" onclick="setLang('de')">DE</button>
-    <button id="btn-en" onclick="setLang('en')">EN</button>
+    <span class="header-sub">AI Disclosure &amp; Transparency Label · <em data-t="ui.header_version">v 0.5 (Vorschau)</em></span>
+  </a>
+  <div class="lang-switch" role="group" aria-label="Sprache / Language">
+    <button type="button" id="btn-de" lang="de" aria-pressed="true">DE</button>
+    <button type="button" id="btn-en" lang="en" aria-pressed="false">EN</button>
   </div>
 </header>
 
-<!-- ── Page ─────────────────────────────────────────────── -->
-<main class="page">
+<div class="study-banner" id="study-banner" hidden></div>
+
+<main class="page" id="main">
 
   <div class="page-title">
-    <h1 data-i18n="hero_title">AI Disclosure &amp; Transparency Label Generator</h1>
-    <p data-i18n="hero_desc">Generieren Sie ein valides AI-DTL 0.4 für Ihr Artefakt.</p>
+    <h1 data-t="ui.title">AI-DTL Generator</h1>
+    <p data-t="ui.subtitle">Kennzeichnung der KI-Nutzung in fünf Schritten</p>
   </div>
 
-  <!-- Step 1 – Stamm (multi-select) -->
-  <div class="step" id="card-stamm">
-    <div class="step-header">
-      <span class="step-num" data-i18n="step">Schritt 1</span>
-      <h2 data-i18n="s1_title">Ausmaß der KI-Nutzung</h2>
-    </div>
-    <p class="step-sub" data-i18n="s1_sub">Wie stark war KI an der Entstehung des Artefakts beteiligt?</p>
-    <div class="opts">
-      <div class="opt" data-dim="stamm" data-val="N" onclick="pick(this)">
-        <div class="opt-icon" data-icon="N"></div>
-        <span class="code">N</span>
-        <span class="lbl" data-i18n="opt.N.lbl">No AI</span>
-        <span class="dsc" data-i18n="opt.N.dsc">Keine KI-Beteiligung am Artefakt</span>
-      </div>
-      <div class="opt" data-dim="stamm" data-val="A" onclick="pick(this)">
-        <div class="opt-icon" data-icon="A"></div>
-        <span class="code">A</span>
-        <span class="lbl" data-i18n="opt.A.lbl">Assistive</span>
-        <span class="dsc" data-i18n="opt.A.dsc">Sprachpolitur, Rechtschreibkorrektur, Übersetzung</span>
-      </div>
-      <div class="opt" data-dim="stamm" data-val="S" onclick="pick(this)">
-        <div class="opt-icon" data-icon="S"></div>
-        <span class="code">S</span>
-        <span class="lbl" data-i18n="opt.S.lbl">Supportive</span>
-        <span class="dsc" data-i18n="opt.S.dsc">Brainstorming, Gliederung, Recherche-Hilfe</span>
-      </div>
-      <div class="opt" data-dim="stamm" data-val="G" onclick="pick(this)">
-        <div class="opt-icon" data-icon="G"></div>
-        <span class="code">G</span>
-        <span class="lbl" data-i18n="opt.G.lbl">Generative</span>
-        <span class="dsc" data-i18n="opt.G.dsc">Substantielle Text-, Code- oder Datengenerierung</span>
-      </div>
-    </div>
-    <p class="multi-hint" data-i18n="s1_hint">Mehrfachauswahl möglich – bei mehreren Stufen zählt die höchste tatsächliche Wirkung.</p>
-    <p class="no-ai-hint" id="no-ai-hint" data-i18n="no_ai_hint">
-      Bei N entfallen Host, Review und Tool. Bitte noch Accountability auswählen.
-    </p>
-  </div>
+  <p class="notice" id="legacy-notice" role="status" hidden></p>
 
-  <!-- Step 2 – Host (multi-select) -->
-  <div class="step" id="card-host">
-    <div class="step-header">
-      <span class="step-num" data-i18n="step2">Schritt 2</span>
-      <h2 data-i18n="s2_title">Hosting-Kontext</h2>
-    </div>
-    <p class="step-sub" data-i18n="s2_sub">Wo lief das KI-System? Relevant für Datenschutz und DFG-Konformität.</p>
-    <div class="opts">
-      <div class="opt" data-dim="host" data-val="H:L" onclick="pick(this)">
-        <div class="opt-icon" data-icon="H:L"></div>
-        <span class="code">H:L</span>
-        <span class="lbl" data-i18n="opt.H:L.lbl">Local</span>
-        <span class="dsc" data-i18n="opt.H:L.dsc">Lokal ausgeführt, keine Datenübertragung (z.B. Ollama)</span>
-      </div>
-      <div class="opt" data-dim="host" data-val="H:I" onclick="pick(this)">
-        <div class="opt-icon" data-icon="H:I"></div>
-        <span class="code">H:I</span>
-        <span class="lbl" data-i18n="opt.H:I.lbl">Institutional</span>
-        <span class="dsc" data-i18n="opt.H:I.dsc">Hochschul- oder Behördeninstanz mit interner AVV</span>
-      </div>
-      <div class="opt" data-dim="host" data-val="H:C" onclick="pick(this)">
-        <div class="opt-icon" data-icon="H:C"></div>
-        <span class="code">H:C</span>
-        <span class="lbl" data-i18n="opt.H:C.lbl">Cloud w/ DPA</span>
-        <span class="dsc" data-i18n="opt.H:C.dsc">Kommerzieller Cloud-Dienst mit AVV</span>
-      </div>
-      <div class="opt" data-dim="host" data-val="H:C!" onclick="pick(this)">
-        <div class="opt-icon" data-icon="H:C!"></div>
-        <span class="code">H:C!</span>
-        <span class="lbl" data-i18n="opt.H:C!.lbl">Cloud w/o DPA</span>
-        <span class="dsc" data-i18n="opt.H:C!.dsc">Ohne AVV – in vielen Kontexten unzulässig</span>
-      </div>
-    </div>
-    <p class="multi-hint" data-i18n="s2_hint">Mehrfachauswahl möglich – bei mehreren Hosts zählt der am wenigsten geschützte.</p>
-  </div>
+  <form id="editor" class="steps" novalidate>
 
-  <!-- Step 3 – Review -->
-  <div class="step" id="card-review">
-    <div class="step-header">
-      <span class="step-num" data-i18n="step3">Schritt 3</span>
-      <h2 data-i18n="s3_title">Prüfung der KI-Ausgaben</h2>
-    </div>
-    <p class="step-sub" data-i18n="s3_sub">Wurden die KI-Ausgaben geprüft, bevor sie übernommen wurden?</p>
-    <div class="opts">
-      <div class="opt" data-dim="review" data-val="R:H" onclick="pick(this)">
-        <div class="opt-icon" data-icon="R:H"></div>
-        <span class="code">R:H</span>
-        <span class="lbl" data-i18n="opt.R:H.lbl">Human reviewed</span>
-        <span class="dsc" data-i18n="opt.R:H.dsc">Menschliche Prüfung der KI-Ausgaben</span>
+    <!-- Ausmaß -->
+    <fieldset class="step" id="step-stamm">
+      <legend><span class="step-num"></span><span class="step-title" data-t="steps.stamm.title"></span></legend>
+      <button type="button" class="unsure-link" aria-expanded="false" aria-controls="helper" data-t="ui.unsure"></button>
+      <p class="step-sub" data-t="steps.stamm.sub"></p>
+      <p class="select-note" data-t="ui.multi"></p>
+      <div class="opts" data-dim="stamm"></div>
+      <p class="cumul" id="cumul-stamm" aria-live="polite"></p>
+      <div class="helper" id="helper" hidden>
+        <p class="helper-intro" data-t="helper.intro"></p>
+        <div class="helper-body" id="helper-body" aria-live="polite"></div>
+        <p class="helper-more"><a href="label/" target="_blank" rel="noopener" data-t="helper.more"></a></p>
       </div>
-      <div class="opt" data-dim="review" data-val="R:M" onclick="pick(this)">
-        <div class="opt-icon" data-icon="R:M"></div>
-        <span class="code">R:M</span>
-        <span class="lbl" data-i18n="opt.R:M.lbl">Machine reviewed</span>
-        <span class="dsc" data-i18n="opt.R:M.dsc">Automatisierte Prüfung (Linter, Faktenchecker)</span>
-      </div>
-      <div class="opt" data-dim="review" data-val="R:HM" onclick="pick(this)">
-        <div class="opt-icon" data-icon="R:HM"></div>
-        <span class="code">R:HM</span>
-        <span class="lbl" data-i18n="opt.R:HM.lbl">Both</span>
-        <span class="dsc" data-i18n="opt.R:HM.dsc">Mensch und Maschine haben geprüft</span>
-      </div>
-      <div class="opt" data-dim="review" data-val="R:N" onclick="pick(this)">
-        <div class="opt-icon" data-icon="R:N"></div>
-        <span class="code">R:N</span>
-        <span class="lbl" data-i18n="opt.R:N.lbl">None</span>
-        <span class="dsc" data-i18n="opt.R:N.dsc">Keine Prüfung – Ausgabe unverändert übernommen</span>
-      </div>
-    </div>
-  </div>
+      <p class="hint" id="no-ai-hint" data-t="no_ai_hint" hidden></p>
+    </fieldset>
 
-  <!-- Step 4 – Accountability + optional ROR -->
-  <div class="step" id="card-acc">
-    <div class="step-header">
-      <span class="step-num" data-i18n="step4">Schritt 4</span>
-      <h2 data-i18n="s4_title">Accountability – Verantwortung</h2>
-    </div>
-    <p class="step-sub" data-i18n="s4_sub">Wer steht für das Artefakt ein?</p>
-    <div class="opts">
-      <div class="opt" data-dim="acc" data-val="Acc:I" onclick="pick(this)">
-        <div class="opt-icon" data-icon="Acc:I"></div>
-        <span class="code">Acc:I</span>
-        <span class="lbl" data-i18n="opt.Acc:I.lbl">Individual</span>
-        <span class="dsc" data-i18n="opt.Acc:I.dsc">Benennbare Einzelperson (z.B. Autor:in mit ORCID)</span>
-      </div>
-      <div class="opt" data-dim="acc" data-val="Acc:O" onclick="pick(this)">
-        <div class="opt-icon" data-icon="Acc:O"></div>
-        <span class="code">Acc:O</span>
-        <span class="lbl" data-i18n="opt.Acc:O.lbl">Organizational</span>
-        <span class="dsc" data-i18n="opt.Acc:O.dsc">Organisation übernimmt Verantwortung</span>
-      </div>
-      <div class="opt" data-dim="acc" data-val="Acc:N" onclick="pick(this)">
-        <div class="opt-icon" data-icon="Acc:N"></div>
-        <span class="code">Acc:N</span>
-        <span class="lbl" data-i18n="opt.Acc:N.lbl">None claimed</span>
-        <span class="dsc" data-i18n="opt.Acc:N.dsc">Rein agentischer Raum – kein Mensch steht ein</span>
-      </div>
-    </div>
-  </div>
+    <!-- Tool -->
+    <fieldset class="step" id="step-tools">
+      <legend><span class="step-num"></span><span class="step-title" data-t="steps.tools.title"></span></legend>
+      <p class="step-sub" data-t="steps.tools.sub"></p>
+      <div id="tools-container"></div>
+      <button type="button" class="add-tool-btn" id="add-tool-btn" data-t="tools.add"></button>
+      <div class="tool-hints" id="tool-hints" aria-live="polite"></div>
+    </fieldset>
 
-  <!-- Step 5 – Multi-tool -->
-  <div class="step" id="card-tool">
-    <div class="step-header">
-      <span class="step-num" data-i18n="step5">Schritt 5</span>
-      <h2 data-i18n="s5_title">Tool-Angabe</h2>
-    </div>
-    <p class="step-sub" data-i18n="s5_sub">Welches KI-System wurde verwendet? Name, Version und Monat der Nutzung.</p>
-    <div id="tools-container"></div>
-    <button type="button" class="add-tool-btn" id="add-tool-btn"
-            data-i18n="btn_add_tool" onclick="addTool()">+ weiteres Tool</button>
-  </div>
+    <!-- Hosting -->
+    <fieldset class="step" id="step-host">
+      <legend><span class="step-num"></span><span class="step-title" data-t="steps.host.title"></span></legend>
+      <button type="button" class="unsure-link" aria-expanded="false" aria-controls="host-helper" data-t="ui.unsure"></button>
+      <p class="step-sub" data-t="steps.host.sub"></p>
+      <p class="select-note" data-t="ui.multi"></p>
+      <div class="opts" data-dim="host"></div>
+      <p class="cumul" id="cumul-host" aria-live="polite"></p>
+      <div class="helper" id="host-helper" hidden>
+        <p class="helper-intro" data-t="host_helper.intro"></p>
+        <div class="helper-body" id="host-helper-body" aria-live="polite"></div>
+        <p class="helper-note" data-t="host_hint"></p>
+        <p class="helper-note" data-t="host_relay"></p>
+      </div>
+    </fieldset>
 
-  <!-- Warning banner -->
-  <div class="warn-banner" id="warn-banner" aria-live="polite"></div>
+    <!-- Review -->
+    <fieldset class="step" id="step-review">
+      <legend><span class="step-num"></span><span class="step-title" data-t="steps.review.title"></span></legend>
+      <p class="select-note" data-t="ui.single"></p>
+      <div class="opts" data-dim="review"></div>
+      <p class="hint" id="review-hint" data-t="review_hint_as" hidden></p>
+    </fieldset>
 
-  <!-- Warning details (collapsible) -->
-  <details class="warn-details">
-    <summary data-i18n="warn_when_title">Wann warnt der Generator?</summary>
-    <div class="warn-details-body" data-i18n="warn_when_body"></div>
-  </details>
+    <!-- Accountability -->
+    <fieldset class="step" id="step-acc">
+      <legend><span class="step-num"></span><span class="step-title" data-t="steps.acc.title"></span></legend>
+      <p class="step-sub" data-t="steps.acc.sub"></p>
+      <p class="select-note" data-t="ui.single"></p>
+      <div class="opts" data-dim="acc"></div>
+    </fieldset>
+
+    <!-- Optional details for the sentence -->
+    <details class="optional" id="optional">
+      <summary data-t="ui.optional"></summary>
+      <div class="optional-body">
+        <div class="field" id="field-purpose">
+          <label for="purpose" data-t="purpose.label"></label>
+          <input type="text" id="purpose" maxlength="120" autocomplete="off">
+        </div>
+        <div class="field" id="field-resp">
+          <label for="resp" data-t="resp.label"></label>
+          <input type="text" id="resp" maxlength="120" autocomplete="off" aria-describedby="resp-help">
+          <small id="resp-help" data-t="resp.help"></small>
+        </div>
+        <p class="optional-help" data-t="ui.optional_help"></p>
+      </div>
+    </details>
+
+  </form>
 
   <!-- Result -->
-  <div class="result-block">
-    <div class="result-label" data-i18n="result_label">Ihr AI-DTL-Label</div>
-
-    <div id="badge-container">
-      <span class="ph" data-i18n="result_ph">Bitte alle Felder ausfüllen …</span>
+  <section class="result" id="result" aria-labelledby="result-title">
+    <div class="label-box">
+      <div class="label-box-head">
+        <h2 id="result-title" data-t="ui.result_title"></h2>
+        <button type="button" class="copy-label" id="copy-label" data-fmt="text" data-t="ui.copy_label"></button>
+      </div>
+      <div class="missing" id="missing" aria-live="polite"></div>
+      <div id="result-body" hidden>
+        <p class="result-intro" data-t="ui.result_intro"></p>
+        <p class="sentence" id="sentence"></p>
+        <p class="code-text" id="code-text"></p>
+      </div>
     </div>
 
-    <div class="label-out" id="label-out" style="display:none;"></div>
-    <p class="explain" id="explain-out"></p>
-
-    <div class="copy-row">
-      <button class="copy-btn" data-fmt="plain"  onclick="copyAs('plain')"  data-i18n="btn_text">Text kopieren</button>
-      <button class="copy-btn" data-fmt="meta"   onclick="copyAs('meta')"   data-i18n="btn_meta">HTML &lt;meta&gt;</button>
-      <button class="copy-btn" data-fmt="md"     onclick="copyAs('md')"     data-i18n="btn_md">Markdown</button>
-      <button class="copy-btn" data-fmt="latex"  onclick="copyAs('latex')"  data-i18n="btn_latex">LaTeX</button>
-      <button class="copy-btn" data-fmt="link"   onclick="copyAs('link')"   data-i18n="btn_link">Link kopieren</button>
-      <button class="copy-btn" onclick="downloadBadge()"    data-i18n="btn_badge">Badge ↓ SVG</button>
-      <button class="copy-btn" onclick="downloadBadgePNG()" data-i18n="btn_png">Badge ↓ PNG</button>
+    <div id="result-extra" hidden>
+      <p class="label-page-link"><a id="label-page-link" target="_blank" rel="noopener" data-t="ui.open_label_page"></a></p>
+      <div class="hints" id="hints" aria-live="polite" hidden></div>
+      <div id="badge-container"></div>
+      <div class="formats" id="copy-row">
+        <span class="formats-label" data-t="ui.more_formats"></span>
+        <button type="button" class="copy-btn" data-fmt="html"   data-t="ui.btn_html"></button>
+        <button type="button" class="copy-btn" data-fmt="md"     data-t="ui.btn_md"></button>
+        <button type="button" class="copy-btn" data-fmt="latex"  data-t="ui.btn_latex"></button>
+        <button type="button" class="copy-btn" data-fmt="link"   data-t="ui.btn_link"></button>
+        <button type="button" class="copy-btn" data-fmt="speech" data-t="ui.btn_speech"></button>
+        <button type="button" class="copy-btn" data-fmt="svg"    data-t="ui.btn_svg"></button>
+        <button type="button" class="copy-btn" data-fmt="png"    data-t="ui.btn_png"></button>
+      </div>
     </div>
-  </div>
+    <p class="copy-status" id="copy-status" role="status"></p>
+
+    <p class="part-label" id="part-label" data-t="ui.part_label" hidden></p>
+
+    <details class="art50" id="art50" hidden>
+      <summary data-t="art50.title"></summary>
+      <div class="art50-body">
+        <p id="art50-question" data-t="art50.question"></p>
+        <div class="answers" role="radiogroup" aria-labelledby="art50-question">
+          <label><input type="radio" name="art50" value="yes"> <span data-t="ui.yes"></span></label>
+          <label><input type="radio" name="art50" value="no"> <span data-t="ui.no"></span></label>
+          <label><input type="radio" name="art50" value="unknown"> <span data-t="ui.dont_know"></span></label>
+        </div>
+        <div class="art50-answer" id="art50-answer" aria-live="polite"></div>
+      </div>
+    </details>
+
+    <button type="button" class="study-copy" id="study-copy" data-t="ui.study_copy" hidden></button>
+
+    <div class="result-end">
+      <button type="button" class="btn-secondary" id="restart-btn" data-t="ui.restart"></button>
+      <details class="examples" id="examples">
+        <summary data-t="ui.examples"></summary>
+        <ul class="examples-list" id="examples-list"></ul>
+      </details>
+    </div>
+  </section>
 
   <footer>
-    <span>AI-DTL Working Draft 0.4.1 · Oktober 2026 · <a href="changelog/">Changelog</a></span>
+    <span><span data-t="ui.footer_draft"></span> · <a href="https://ai-dtl.github.io/changelog/">Changelog</a></span>
     <span>
-      <a href="https://github.com/ai-dtl/ai-dtl.github.io/blob/main/LICENSE" target="_blank">MIT</a> / <a href="https://creativecommons.org/licenses/by/4.0" target="_blank">CC BY 4.0</a> ·
-      DOI folgt (Zenodo) ·
-      <a href="https://github.com/ai-dtl/ai-dtl.github.io/issues" target="_blank">Feedback</a> ·
+      <a href="https://github.com/ai-dtl/ai-dtl.github.io/blob/main/LICENSE">MIT</a> / <a href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0</a> ·
+      <span data-t="ui.doi">DOI folgt (Zenodo)</span> ·
+      <a href="https://github.com/ai-dtl/ai-dtl.github.io/issues">Feedback</a> ·
       <a href="mailto:jdohmen@uni-koblenz.de">Joshua Dohmen</a>
     </span>
-    <p class="privacy"><span data-site="privacy"></span> <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" data-site="privacy_link"></a></p>
+    <span class="footer-test" data-t="ui.footer_test"></span>
+    <p class="privacy"><span data-t="ui.privacy"></span> <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" data-t="ui.privacy_link"></a></p>
   </footer>
 
 </main>
 
-<script src="js/icons.js"></script>
-<script src="js/tools.js"></script>
 <script src="js/spec.js"></script>
 <script src="js/label-core.js"></script>
-<script src="js/app.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/services.js"></script>
+<script src="js/examples.js"></script>
+<script src="js/editor.js"></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 // Export snapshots for the six reference states (Annex E.3) and rules for the spoken text.
 // The snapshot file must be approved by Joshua once; regenerate it only on purpose:
-//   UPDATE_SNAPSHOTS=1 node --test rc/tests/exports.test.js
+//   UPDATE_SNAPSHOTS=1 node --test tests/exports.test.js
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');

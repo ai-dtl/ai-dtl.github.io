@@ -88,8 +88,9 @@ function normalize(input, v) {
   if (stamm && stamm !== 'N') {
     out.host = effectiveHost(input.host, spec);
     out.review = isCode(spec, 'review', input.review) ? input.review : null;
+    // A generic service inserted as "Name/" without a model ends up as "Name"
     out.tools = (input.tools || [])
-      .map(t => ({ name: String(t.name || '').trim(), date: toolDate(t) }))
+      .map(t => ({ name: String(t.name || '').trim().replace(/\s*\/+$/, ''), date: toolDate(t) }))
       .filter(t => t.name);
     if (max) out.p = cleanFreeText(input.p, max);
   }
@@ -113,8 +114,9 @@ function validate(input, v) {
     if (spec.rules.dateRequired) {
       if (!named.length || named.some(t => !DATE_RE.test(toolDate(t)))) missing.add('date');
     }
-    if (!n.host) missing.add('host');
-    if (!n.review) missing.add('review');
+    // read from the input: while the extent is still open, normalize() leaves these empty
+    if (!effectiveHost(input.host, spec)) missing.add('host');
+    if (!isCode(spec, 'review', input.review)) missing.add('review');
   }
   if (!n.acc || (n.stamm === 'N' && !spec.rules.noAiAcc.includes(n.acc))) missing.add('acc');
   return MISSING_ORDER.filter(k => missing.has(k));
@@ -297,11 +299,8 @@ function buildSentence(state, lang, variant = 'text', v) {
   const parts = [t.sentence.stamm[n.stamm]];
   if (!isN && n.p) parts.push(fill(t.sentence.purpose, { p: n.p }));
   if (!isN && n.review) parts.push(reviewSet[n.review]);
+  // The tools are part of the code, not of the sentence
   parts.push(n.rp ? fill(t.sentence.resp, { rp: n.rp }) : t.sentence.acc[n.acc]);
-  if (!isN && n.tools.length) {
-    const list = n.tools.map(x => `${x.name} (${x.date})`).join('; ');
-    parts.push(fill(n.tools.length > 1 ? t.sentence.tools : t.sentence.tool, { list }));
-  }
   return parts.join(' ');
 }
 
@@ -332,29 +331,56 @@ function art50Hint(state) {
   return { visible, open, icon: euIconSuggestion(state) };
 }
 
-// ── Decision helper "Not sure? A few questions" (A.1.4)
-// answers: { q1, q1b, q2, q2b, q3 } with true/false; q3 ∈ 'M' | 'G' | 'both'
-// Returns the suggested code, or null while a question is still open.
+// ── Decision helper "Not sure?" for the extent
+// q1 separates the groups (AI content in the work or not); then at most one more
+// question per group, asked strongest first, so "the strongest level counts" is built in:
+//   q1 yes → q2: new content? yes G, no M      (without M: q1 yes → G)
+//   q1 no  → q3: ideas, outline, research? yes S, no → q4: language or form? yes A, no N
+// answers: { q1, q2, q3, q4 } with true/false. Returns the code, or null while a question is open.
 function helperResult(answers, enableM) {
   const a = answers || {};
   if (a.q1 == null) return null;
-  if (a.q1 === false) return a.q1b == null ? null : (a.q1b ? 'S' : 'N');
-  if (a.q2 == null) return null;
-  if (a.q2 === true) return a.q2b == null ? null : (a.q2b ? 'S' : 'A');
-  if (!enableM) return 'G';
+  if (a.q1 === true) {
+    if (!enableM) return 'G';
+    return a.q2 == null ? null : (a.q2 ? 'G' : 'M');
+  }
   if (a.q3 == null) return null;
-  return a.q3 === 'M' ? 'M' : 'G';
+  if (a.q3 === true) return 'S';
+  return a.q4 == null ? null : (a.q4 ? 'A' : 'N');
 }
 
 // Next open question id for the helper, or null when a result is available.
 function helperNext(answers, enableM) {
   const a = answers || {};
   if (a.q1 == null) return 'q1';
-  if (a.q1 === false) return a.q1b == null ? 'q1b' : null;
-  if (a.q2 == null) return 'q2';
-  if (a.q2 === true) return a.q2b == null ? 'q2b' : null;
-  if (!enableM) return null;
-  return a.q3 == null ? 'q3' : null;
+  if (a.q1 === true) return (enableM && a.q2 == null) ? 'q2' : null;
+  if (a.q3 == null) return 'q3';
+  if (a.q3 === true) return null;
+  return a.q4 == null ? 'q4' : null;
+}
+
+// ── Hosting helper "Not sure?": who operates the AI system?
+// Follows the three variants of the DFG guideline on AI in peer review (form 4.04):
+// only on your own device → H:L; operated by a trustworthy institution, your own included → H:I;
+// a company as provider → H:C with a contract that rules out the use of your input, else H:C!.
+// answers: { device: true|false, operator: 'institution'|'company', contract: 'yes'|'no'|'unknown' }
+function hostHelperResult(answers) {
+  const a = answers || {};
+  if (a.device == null) return null;
+  if (a.device === true) return 'H:L';
+  if (a.operator == null) return null;
+  if (a.operator === 'institution') return 'H:I';
+  if (a.contract == null) return null;
+  return a.contract === 'yes' ? 'H:C' : 'H:C!';
+}
+
+function hostHelperNext(answers) {
+  const a = answers || {};
+  if (a.device == null) return 'device';
+  if (a.device === true) return null;
+  if (a.operator == null) return 'operator';
+  if (a.operator === 'institution') return null;
+  return a.contract == null ? 'contract' : null;
 }
 
 // ── Host suggestion from chosen services (E4): union of the services' hosts
@@ -371,8 +397,10 @@ function escHtml(s) {
 }
 const escAttr = escHtml;
 
-function escMd(s) {
-  return String(s).replace(/[\\[\]()*_`]/g, '\\$&');
+// opts.parens: false leaves ( ) alone – safe in running text, where no "](" can form
+function escMd(s, opts = {}) {
+  const re = opts.parens === false ? /[\\[\]*_`]/g : /[\\[\]()*_`]/g;
+  return String(s).replace(re, '\\$&');
 }
 
 const LATEX_TEXT = {
@@ -455,7 +483,8 @@ function buildExport(fmt, input, opts = {}) {
         `<meta name="ai-dtl" content="${escAttr(code)}">`;
     }
     case 'md': {
-      const s = linkedSentence(sentence, n.rp, resp, escMd, seg => `[${escMd(seg.text)}](${seg.url})`);
+      const escText = x => escMd(x, { parens: false });
+      const s = linkedSentence(sentence, n.rp, resp, escText, seg => `[${escMd(seg.text)}](${seg.url})`);
       return `> ${s}\n> [${mdCodeSpan(code)}](${url})`;
     }
     case 'latex': {
@@ -476,7 +505,7 @@ return {
   getSpec, isCode, fill, effectiveStamm, effectiveHost, cleanFreeText, isValidToolName, stripToolChars,
   TOOL_FORBIDDEN, DATE_RE, normalize, validate, buildCode, parseCode, toParams, buildURL, fromParams,
   idSegments, stripIds, buildSentence, warnings, warningRules, euIconSuggestion, art50Hint,
-  helperResult, helperNext, suggestedHosts, escHtml, escAttr, escMd, escLatexText, escLatexUrl,
+  helperResult, helperNext, hostHelperResult, hostHelperNext, suggestedHosts, escHtml, escAttr, escMd, escLatexText, escLatexUrl,
   mdCodeSpan, buildExport,
 };
 })();

@@ -9,6 +9,8 @@ const ICONS = {
   A: `<path d="M4 6.5h9M4 11.5h16M4 16.5h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M18.7 1.8L19.6 4.2 22 5.1 19.6 6 18.7 8.4 17.8 6 15.4 5.1 17.8 4.2 Z" fill="currentColor"/>`,
   // S: ideas & structure – lightbulb + spark (spark same size as A's)
   S: `<path d="M10.5 4.5a5 5 0 00-3.3 8.7c.7.65 1.2 1.4 1.2 2.3h4.2c0-.9.5-1.65 1.2-2.3A5 5 0 0010.5 4.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.6 18h3.8M9.4 20.2h2.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M19 1.5L19.9 3.9 22.3 4.8 19.9 5.7 19 8.1 18.1 5.7 15.7 4.8 18.1 3.9Z" fill="currentColor"/>`,
+  // M: existing work modified – picture frame with a pencil and a small spark (same spark as A)
+  M: `<rect x="2.6" y="6.6" width="13.4" height="13.4" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M6.9 16.1l.5-1.9 4-4 1.4 1.4-4 4z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M18.7 1.8L19.6 4.2 22 5.1 19.6 6 18.7 8.4 17.8 6 15.4 5.1 17.8 4.2 Z" fill="currentColor"/>`,
   // G: generative AI – sparkles
   G: `<path d="M9.5 2.5L11.4 7.6 16.5 9.5 11.4 11.4 9.5 16.5 7.6 11.4 2.5 9.5 7.6 7.6 Z" fill="currentColor"/><path d="M18.3 13.5L19.4 16.4 22.3 17.5 19.4 18.6 18.3 21.5 17.2 18.6 14.3 17.5 17.2 16.4 Z" fill="currentColor"/>`,
 
@@ -16,7 +18,7 @@ const ICONS = {
   'H:L': `<rect x="3.2" y="4.8" width="17.6" height="11.4" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M9.3 19.8h5.4M12 16.2v3.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>`,
   'H:I': `<path d="M3.5 8.6L12 3.4l8.5 5.2v.9h-17z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M5.6 12v5.2M9.9 12v5.2M14.1 12v5.2M18.4 12v5.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M3.5 20.4h17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>`,
   'H:C': `<path d="M2.8 13.4A3.8 3.8 0 0 1 7.4 9.7A5.2 5.2 0 0 1 17.75 9.7A3.8 3.8 0 0 1 17 17.2H6.6A3.8 3.8 0 0 1 2.8 13.4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9.2 12.4l2 2 3.6-3.6" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`,
-  'H:C!': `<path d="M2.8 13.4A3.8 3.8 0 0 1 7.4 9.7A5.2 5.2 0 0 1 17.75 9.7A3.8 3.8 0 0 1 17 17.2H6.6A3.8 3.8 0 0 1 2.8 13.4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M11.8 8.6v3.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="11.8" cy="14.6" r="1.05" fill="currentColor"/>`,
+  'H:C!': `<path d="M2.8 13.4A3.8 3.8 0 0 1 7.4 9.7A5.2 5.2 0 0 1 17.75 9.7A3.8 3.8 0 0 1 17 17.2H6.6A3.8 3.8 0 0 1 2.8 13.4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M11.8 8.1v2.7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="11.8" cy="13.55" r="1.05" fill="currentColor"/>`,
 
   // ── Review – one eye family: pupil shape encodes the reviewer
   'R:H': `<path d="M2.6 12S6.1 5.9 12 5.9 21.4 12 21.4 12 17.9 18.1 12 18.1 2.6 12 2.6 12z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="12" r="2.4" fill="currentColor"/>`,
@@ -36,40 +38,78 @@ function iconSVG(key, size = 24) {
   return `<svg class="dtl-icon" viewBox="0 0 24 24" width="${size}" height="${size}" aria-hidden="true">${ICONS[key]}</svg>`;
 }
 
-// ── Badge rendering
-// Generates an inline SVG badge (CC-style) for the current selection.
-// Neutral by design: word mark, black circles, no warning colours.
+// ── Badge rendering (revision plan, Annex B)
+// Neutral by design: word mark "AI-DTL" with version, thin divider, one black circle per
+// dimension with a white pictogram and one word underneath. No warning colours, no EU sign.
 // Only codes that have a pictogram are rendered, so nothing from a URL reaches the SVG unchecked.
 function svgEsc(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-function buildBadgeSVG(state, version = '0.4') {
+let badgeSeq = 0;
+
+// Splits a badge word longer than 16 characters at the word boundary that gives the
+// most even lines, e.g. "Commercial with DPA" → ["Commercial", "with DPA"].
+function badgeLines(word, max = 16) {
+  const parts = String(word).split(' ');
+  if (word.length <= max || parts.length < 2) return [word];
+  let best = null;
+  for (let k = 1; k < parts.length; k++) {
+    const a = parts.slice(0, k).join(' '), b = parts.slice(k).join(' ');
+    const worst = Math.max(a.length, b.length);
+    if (!best || worst < best.worst) best = { worst, lines: [a, b] };
+  }
+  return best.lines;
+}
+
+// state: normalized (one code per dimension)
+// opts: { version, words: { code: word } | null (null → codes under the circles, 0.4 style),
+//         title (code string), desc (plain-language sentence), url }
+function buildBadgeSVG(state, opts = {}) {
+  const version = opts.version || '0.5';
+  const words = opts.words || null;
   const known = c => typeof c === 'string' && Object.prototype.hasOwnProperty.call(ICONS, c);
   const dims = [];
-
   if (known(state.stamm)) dims.push(state.stamm);
   if (state.stamm !== 'N') {
     if (known(state.host)) dims.push(state.host);
     if (known(state.review)) dims.push(state.review);
   }
   if (known(state.acc)) dims.push(state.acc);
-
   if (dims.length === 0) return '';
 
-  const r = 22;
-  const gap = 56;
-  const padX = 20;
-  const padY = 14;
-  const cy = padY + r;
-  // Word mark "AI-DTL" + version, thin divider, then one circle per dimension
-  const wmW = 64;
-  const divX = padX + wmW + 10;
-  const dimStartX = divX + 12 + r;
-  const totalW = dimStartX + (dims.length - 1) * gap + r + padX;
-  const h = r * 2 + padY + 26;
+  const caption = c => (words && words[c]) || c;
+  // Words over 16 characters break at a word boundary into two balanced lines
+  const lines = dims.map(c => badgeLines(caption(c)));
+  const lineCount = Math.max(...lines.map(l => l.length));
+  // Conservative average glyph widths: Arial 11 px for words, Courier 10 px for codes
+  const charW = words ? 6.4 : 6.6;
+  const widths = lines.map(l => Math.max(...l.map(s => s.length)) * charW);
 
-  let body = `
+  const r = 22, padX = 20, padY = 14, cy = padY + r;
+  const wmW = 64, divX = padX + wmW + 10;
+  const minGap = words ? 84 : 56;
+  const centers = [divX + Math.max(r + 12, widths[0] / 2 + 8)];
+  for (let i = 1; i < dims.length; i++) {
+    centers.push(centers[i - 1] + Math.max(minGap, (widths[i - 1] + widths[i]) / 2 + 12));
+  }
+  const last = dims.length - 1;
+  const totalW = Math.ceil(centers[last] + Math.max(r, widths[last] / 2) + padX);
+  // with words: word (one or two lines), then the code in small grey type underneath
+  const lineH = 13;
+  const h = r * 2 + padY + (words ? 42 : 30) + (lineCount - 1) * lineH;
+
+  const id = `dtl-badge-${++badgeSeq}`;
+  const a11y = opts.title
+    ? ` role="img" aria-labelledby="${id}-t${opts.desc ? ` ${id}-d` : ''}"`
+    : ' aria-hidden="true"';
+  let body = '';
+  if (opts.title) body += `<title id="${id}-t">${svgEsc(opts.title)}</title>`;
+  if (opts.desc) body += `<desc id="${id}-d">${svgEsc(opts.desc)}</desc>`;
+  if (opts.title || opts.url) {
+    body += `<metadata>${svgEsc([opts.title, opts.url].filter(Boolean).join(' '))}</metadata>`;
+  }
+  body += `
     <text x="${padX}" y="${cy + 2}" font-family="'Open Sans', Arial, sans-serif"
           font-size="15" font-weight="800" fill="#000000" letter-spacing=".5">AI-DTL</text>
     <text x="${padX}" y="${cy + 16}" font-family="'Open Sans', Arial, sans-serif"
@@ -78,36 +118,42 @@ function buildBadgeSVG(state, version = '0.4') {
           stroke="#cccccc" stroke-width="1"/>`;
 
   dims.forEach((code, i) => {
-    const cx = dimStartX + i * gap;
+    const cx = Math.round(centers[i] * 10) / 10;
     const iconPaths = ICONS[code].replace(/currentColor/g, '#ffffff');
+    const text = words
+      ? `font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#333333"`
+      : `font-family="'Courier New',monospace" font-size="10" font-weight="700" fill="#555555"`;
     body += `
       <circle cx="${cx}" cy="${cy}" r="${r}" fill="#000000"/>
       <g transform="translate(${cx - 12},${cy - 12})">${iconPaths}</g>
-      <text x="${cx}" y="${cy + r + 14}" text-anchor="middle"
-            font-family="'Courier New',monospace" font-size="10" font-weight="700"
-            fill="#555555">${svgEsc(code)}</text>`;
+      <text x="${cx}" y="${cy + r + 16}" text-anchor="middle" ${text}>${lines[i]
+        .map((s, k) => `<tspan x="${cx}" dy="${k ? lineH : 0}">${svgEsc(s)}</tspan>`).join('')}</text>`;
+    if (words) {
+      body += `
+      <text x="${cx}" y="${cy + r + 29 + (lines[i].length - 1) * lineH}" text-anchor="middle" font-family="'Courier New',monospace"
+            font-size="9" font-weight="700" fill="#6e6e6e">${svgEsc(code)}</text>`;
+    }
   });
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${totalW} ${h}" width="${totalW}" class="dtl-badge">
-    ${body}
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${totalW} ${h}" width="${totalW}" class="dtl-badge"${a11y}>${body}
   </svg>`;
 }
 
-// Download badge as SVG file
-function downloadBadge() {
-  const svg = document.querySelector('#badge-container svg');
+// Download the badge shown in `container` as SVG
+function downloadBadge(container = '#badge-container') {
+  const svg = document.querySelector(`${container} svg`);
   if (!svg) return;
-  const data = new XMLSerializer().serializeToString(svg);
-  const blob = new Blob([data], { type: 'image/svg+xml' });
+  const data = '<?xml version="1.0" encoding="UTF-8"?>\n' + new XMLSerializer().serializeToString(svg);
+  const blob = new Blob([data], { type: 'image/svg+xml;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url; a.download = 'dtl-badge.svg'; a.click();
+  a.href = url; a.download = 'ai-dtl-badge.svg'; a.click();
   URL.revokeObjectURL(url);
 }
 
-// Download badge as PNG (3× scale via canvas)
-function downloadBadgePNG() {
-  const svg = document.querySelector('#badge-container svg');
+// Download the badge as PNG (3× resolution, transparent background)
+function downloadBadgePNG(container = '#badge-container') {
+  const svg = document.querySelector(`${container} svg`);
   if (!svg) return;
   const vb = svg.viewBox.baseVal;
   const w = vb.width, h = vb.height, scale = 3;
@@ -125,10 +171,12 @@ function downloadBadgePNG() {
     canvas.toBlob(pngBlob => {
       const a = document.createElement('a');
       a.href = URL.createObjectURL(pngBlob);
-      a.download = 'dtl-badge.png'; a.click();
+      a.download = 'ai-dtl-badge.png'; a.click();
       URL.revokeObjectURL(a.href);
     }, 'image/png');
     URL.revokeObjectURL(svgUrl);
   };
   img.src = svgUrl;
 }
+
+if (typeof module !== 'undefined') module.exports = { ICONS, iconSVG, buildBadgeSVG, badgeLines };
