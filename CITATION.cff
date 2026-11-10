@@ -6,6 +6,7 @@ authors:
   - family-names: Dohmen
     given-names: Joshua
     affiliation: Universität Koblenz
+    orcid: "https://orcid.org/0009-0006-3443-508X"
 version: 0.5.0-preview
 doi: 10.5281/zenodo.24101111
 date-released: 2026-11-10
